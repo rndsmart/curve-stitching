@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        width: 500px;
+        height: 500px;
+        background-color: green;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lesson 6: Generalizing Rotation Angle</h1>
+
+    <p>
+      In the fifth lesson, we generalized our code in order to draw the curve
+      stitch in any position, and to be able to easily set the size of the curve
+      stitch.
+    </p>
+
+    <p>
+      Now we are going to generalize the rotational angle at which the curve
+      stitch is drawn. This is a slightly trickier thing to code for two
+      reasons.
+    </p>
+
+    <ol>
+      <li>
+        The command to rotate requires you to enter the angle in units of
+        'radians' rather than degrees. If you don't know what a radian is, then
+        don't worry. All you need to know is that it is easy to convert radians
+        to degrees, and we have that conversion shown in the code.
+      </li>
+      <li>
+        When we rotate something in a drawing, we need to ask what and where we
+        are rotating it. Are rotating "everything" in the drawing, or just one
+        shape within it? And about what point in the canvas plane are we doing
+        the rotation?
+      </li>
+    </ol>
+    <p>
+      In answer to this second point, it turns out in our case that we only want
+      to rotate our individual curve stitch, and we want to rotate it about the
+      point where we draw its corner. To do that, we first need to "translate"
+      (i.e. move) the center of the whole canvas coordinate systems (which is
+      set by default to be at the top-left corner of the canvas HTML element) in
+      such a way that the corner of our stitch will be at the corner of the
+      canvas. Then we rotate the whole canvas by some amount, then we draw the
+      curve stitch.
+    </p>
+    <p>
+      If that sounds confusing -- DO NOT WORRY! It took me a fair bit of trial
+      and error to get the rotations done right, and that is NORMAL in coding.
+      The great thing is, once you've figured something out in coding, you can
+      save that research in your code and then start building upon it.
+    </p>
+    <p>
+      This is how coding works: always start with something simple and then
+      start improving upon it little by little.
+    </p>
+    <p>Here's our stitch rotated by 45 degrees clockwise.</p>
+    <!-- Here we create our canvas -->
+
+    <div class="canvas-container">
+      <canvas id="mycanvas" width="500px" height="500px"></canvas>
+    </div>
+
+    <script>
+      // Set up
+      var canvas = document.getElementById("mycanvas");
+      var ctx = canvas.getContext("2d");
+
+      // Declare some variables
+      var canvasWidth = 500;
+      var canvasHeight = canvasWidth; // Make width and height equal so it's square
+      // Now we can just change numberOfLines to easily improve our curve stitch
+      var numberOfLines = 20;
+
+      // Let's introduce a new variable; instead of depending on the size of the canvas
+      // let's explicitly control the sides of the curve stitch
+      var cureStitchLength = 100;
+
+      var spaceBetweenLinesOnAxes = cureStitchLength / numberOfLines;
+
+      // Define coords for the corner of our curve stitch
+      x = 100;
+      y = 100;
+
+      // First move the corner of the canvas on which we are drawing
+      // to the place where we want to perform the rotation (the corner of our stitch)
+      ctx.translate(x, y);
+
+      // Now rotate the whole canvas by 45 degrees
+      var oneDegree = Math.PI / 180;
+      ctx.rotate(45 * oneDegree);
+
+      // Now move the corner of the canvas back to its original position
+      ctx.translate(-x, -y);
+
+      // Code to loop through and draw 'numberOfLines' lines
+      ctx.beginPath();
+      ctx.strokeStyle = "white";
+      for (var i = 0; i < numberOfLines; i++) {
+        ctx.moveTo(x + (i + 1) * spaceBetweenLinesOnAxes, y + 0);
+        ctx.lineTo(x + 0, y + cureStitchLength - i * spaceBetweenLinesOnAxes);
+      }
+      ctx.stroke();
+    </script>
+  </body>
+</html>

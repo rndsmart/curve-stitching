@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        width: 500px;
+        height: 500px;
+        background-color: red;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lesson 2: More Detailed Curve Stitch</h1>
+
+    <p>
+      In the first lesson, we drew 5 lines to make a basic curve stitch. Let's
+      double the number of lines to 10 here. We do this by reducing the space on
+      the axes between lines from 100px to 50px, and doubling the number of
+      commands to draw lines.
+    </p>
+
+    <!-- Here we create our canvas -->
+
+    <div class="canvas-container">
+      <canvas id="mycanvas" width="500px" height="500px"></canvas>
+    </div>
+
+    <script>
+      // Set up to be able to draw on our canvas
+      // We need to get a "handle" on our canvas within out JS code; we do this by
+      // selecting it by the id we gave it in the html "mycanvas"
+      var canvas = document.getElementById("mycanvas");
+      // From that handle, we get a special 'object' called the 'context' that has within it all of the tools to draw colors and shapes on our canvas
+      var ctx = canvas.getContext("2d");
+
+      // Now we can start drawing stuff
+
+      // Let's start with some lines; first, we have to let the browser know that
+      // we want to start drawing a path of lines with this command:
+      ctx.beginPath();
+      // 1
+      ctx.moveTo(50, 0);
+      ctx.lineTo(0, 500);
+      // 2
+      ctx.moveTo(100, 0);
+      ctx.lineTo(0, 450);
+      // 1
+      ctx.moveTo(150, 0);
+      ctx.lineTo(0, 400);
+      // 1
+      ctx.moveTo(200, 0);
+      ctx.lineTo(0, 350);
+      // 1
+      ctx.moveTo(250, 0);
+      ctx.lineTo(0, 300);
+      // 1
+      ctx.moveTo(300, 0);
+      ctx.lineTo(0, 250);
+      // 1
+      ctx.moveTo(350, 0);
+      ctx.lineTo(0, 200);
+      // 1
+      ctx.moveTo(400, 0);
+      ctx.lineTo(0, 150);
+      // 1
+      ctx.moveTo(450, 0);
+      ctx.lineTo(0, 100);
+      // 1
+      ctx.moveTo(500, 0);
+      ctx.lineTo(0, 50);
+      //
+      ctx.stroke();
+      var width = canvas.offsetWidth;
+      console.log(width);
+    </script>
+  </body>
+</html>

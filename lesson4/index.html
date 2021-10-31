@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        width: 500px;
+        height: 500px;
+        background-color: purple;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lesson 4: Changing Variable Values</h1>
+
+    <p>
+      In the third lesson, we "generalized" our code to draw
+      <b>any number</b> of lines just by changing one variable "numberOfLines".
+      Now we can change that from 10 to 100 to get much smoother curve. We've
+      also changed the stroke color here to white.
+    </p>
+    <p>
+      Look how great it is to generalize our code with an algorithm rather than
+      just entering lots of repetitive commands!
+    </p>
+
+    <!-- Here we create our canvas -->
+
+    <div class="canvas-container">
+      <canvas id="mycanvas" width="500px" height="500px"></canvas>
+    </div>
+
+    <script>
+      // Set up
+      var canvas = document.getElementById("mycanvas");
+      var ctx = canvas.getContext("2d");
+
+      // Declare some variables
+      var canvasWidth = 500;
+      var canvasHeight = canvasWidth; // Make width and height equal so it's square
+      // Now we can just change numberOfLines to easily improve our curve stitch
+      var numberOfLines = 100;
+      var spaceBetweenLinesOnAxes = canvasWidth / numberOfLines;
+
+      //
+      ctx.beginPath();
+      ctx.strokeStyle = "white";
+
+      // Now we replace all of the individual lines with a single for loop!
+      // As the number i increases from 0 to 9, the line being drawn will have one end increase along the x axis while decreasing along the y axis
+      for (var i = 0; i < numberOfLines; i++) {
+        ctx.moveTo((i + 1) * spaceBetweenLinesOnAxes, 0);
+        ctx.lineTo(0, canvasWidth - i * spaceBetweenLinesOnAxes);
+      }
+
+      ctx.stroke();
+      var width = canvas.offsetWidth;
+      console.log(width);
+    </script>
+  </body>
+</html>

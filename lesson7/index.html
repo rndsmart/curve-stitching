@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        width: 500px;
+        height: 500px;
+        background-color: silver;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lesson 7: Basic Function</h1>
+
+    <p>
+      In the sixth lesson, we generalized our code in order to be able to rotate
+      our stitch it around it's corner. Now we want to take our code and put it
+      into a function, and take the key parameters within that code and rework
+      them as arguments to that function. Now we can draw a stitch just by
+      executing this function with values for the size, position, number of
+      lines and rotational angle.
+    </p>
+    <p>
+      Now we can easily start creating more elaborate patterns. For example,
+      here I have called this function 4 times. The only thing I change for each
+      of these four calls is the rotational angle. This gives us a cool looking
+      4-pointed star.
+    </p>
+
+    <!-- Here we create our canvas -->
+
+    <div class="canvas-container">
+      <canvas id="mycanvas" width="500px" height="500px"></canvas>
+    </div>
+
+    <script>
+      // Set up
+      var canvas = document.getElementById("mycanvas");
+      var ctx = canvas.getContext("2d");
+      // Declare some GLOBAL variables
+      var canvasWidth = 500;
+      var canvasHeight = canvasWidth; // Make width and height equal so it's square
+
+      // Draw several curve stitches in the same position with different values for
+      // the argument 'rotationInDegrees'
+      drawCurveStitch(100, 20, 0, { x: 200, y: 100 });
+      drawCurveStitch(100, 20, 90, { x: 200, y: 100 });
+      drawCurveStitch(100, 20, 180, { x: 200, y: 100 });
+      drawCurveStitch(100, 20, 270, { x: 200, y: 100 });
+
+      /**
+       * Let's take the code we developed previously, put it into a function,
+       * and rework the most important parameters to our stitch as arguments to that
+       * function; this lets us easily reuse our code
+       *
+       * Notice that each of these arguments has an equals sign followed by a number;
+       * this is how you define a "default" value for the argument;
+       * if you do not suppl a value for the argument, then this value will be
+       * used instead.
+       */
+      function drawCurveStitch(
+        cureStitchLength = 100,
+        numberOfLines = 10,
+        rotationInDegrees = 0,
+        position = { x: 0, y: 0 }
+      ) {
+        // Define coords for the corner of our curve stitch
+        x = position.x;
+        y = position.y;
+        var spaceBetweenLinesOnAxes = curveStitchLength / numberOfLines;
+
+        // First move the corner of the canvas on which we are drawing
+        // to the place where we want to perform the rotation (the corner of our stitch)
+        ctx.save(); // saves the coordinate system
+        ctx.translate(x, y);
+
+        // Now rotate the whole canvas by 45 degrees
+        var oneDegree = Math.PI / 180;
+        ctx.rotate(rotationInDegrees * oneDegree);
+
+        // Now move the corner of the canvas back to its original position
+        ctx.translate(-x, -y);
+
+        // Code to loop through and draw 'numberOfLines' lines
+        ctx.beginPath();
+        ctx.strokeStyle = "white";
+        for (var i = 0; i < numberOfLines; i++) {
+          ctx.moveTo(x + (i + 1) * spaceBetweenLinesOnAxes, y + 0);
+          ctx.lineTo(
+            x + 0,
+            y + curveStitchLength - i * spaceBetweenLinesOnAxes
+          );
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+    </script>
+  </body>
+</html>

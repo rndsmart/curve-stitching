@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        width: 500px;
+        height: 500px;
+        background-color: pink;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lesson 3: For Loop</h1>
+
+    <p>
+      In the second lesson, we increased the number of lines to 10. The curve
+      stitch looks better now, but it's taking a lot of work to manually add
+      more and more lines. In this lesson, we are going to use a
+      <b>for loop</b> to draw the lines "automatically".
+    </p>
+
+    <p>
+      Loops are one of the most important tools in writing an algorithm, so
+      you'll want to practice them a lot!
+    </p>
+
+    <p>
+      Notice in the code that we also use variables to encode the space between
+      lines on the axis and the number of lines that we want.
+    </p>
+
+    <!-- Here we create our canvas -->
+
+    <div class="canvas-container">
+      <canvas id="mycanvas" width="500px" height="500px"></canvas>
+    </div>
+
+    <script>
+      // Set up
+      var canvas = document.getElementById("mycanvas");
+      var ctx = canvas.getContext("2d");
+
+      // Declare some variables
+      var canvasWidth = 500;
+      var canvasHeight = canvasWidth; // Make width and height equal so it's square
+      var numberOfLines = 10;
+      var spaceBetweenLinesOnAxes = canvasWidth / numberOfLines;
+
+      //
+      ctx.beginPath();
+
+      // Now we replace all of the individual lines with a single for loop!
+      // As the number i increases from 0 to 9, the line being drawn will have one end increase along the x axis while decreasing along the y axis
+      for (var i = 0; i < numberOfLines; i++) {
+        ctx.moveTo((i + 1) * spaceBetweenLinesOnAxes, 0);
+        ctx.lineTo(0, canvasWidth - i * spaceBetweenLinesOnAxes);
+      }
+
+      ctx.stroke();
+      var width = canvas.offsetWidth;
+      console.log(width);
+    </script>
+  </body>
+</html>

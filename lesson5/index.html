@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        width: 500px;
+        height: 500px;
+        background-color: red;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lesson 5: Generalizing Size and Position</h1>
+
+    <p>
+      In the fourth lesson, we started to show the power of "generalizing" our
+      code. Let's do some more generalization. Instead of making the sides of
+      the curve stitch equal to the size of the canvas, lets introduce a
+      dedicated variable "cureStitchLength" to control the size of the stitch.
+      Let's also introduce two more variables "x" and "y" to control the
+      position of the stitch's corner. Let's gives these new variables the demo
+      value of 100, and reduce the number of lines in the stitch from 100 to 20.
+    </p>
+
+    <!-- Here we create our canvas -->
+
+    <div class="canvas-container">
+      <canvas id="mycanvas" width="500px" height="500px"></canvas>
+    </div>
+
+    <script>
+      // Set up
+      var canvas = document.getElementById("mycanvas");
+      var ctx = canvas.getContext("2d");
+
+      // Declare some variables
+      var canvasWidth = 500;
+      var canvasHeight = canvasWidth; // Make width and height equal so it's square
+      // Now we can just change numberOfLines to easily improve our curve stitch
+      var numberOfLines = 20;
+
+      // Let's introduce a new variable; instead of depending on the size of the canvas
+      // let's explicitly control the sides of the curve stitch
+      var cureStitchLength = 100;
+
+      var spaceBetweenLinesOnAxes = cureStitchLength / numberOfLines;
+
+      // Define coords for the corner of our curve stitch
+      x = 100;
+      y = 100;
+
+      //
+      ctx.beginPath();
+      ctx.strokeStyle = "white";
+
+      // Now we replace all of the individual lines with a single for loop!
+      // As the number i increases from 0 to 9, the line being drawn will have one end increase along the x axis while decreasing along the y axis
+      for (var i = 0; i < numberOfLines; i++) {
+        ctx.moveTo(x + (i + 1) * spaceBetweenLinesOnAxes, y + 0);
+        ctx.lineTo(x + 0, y + cureStitchLength - i * spaceBetweenLinesOnAxes);
+      }
+
+      ctx.stroke();
+      var width = canvas.offsetWidth;
+      console.log(width);
+    </script>
+  </body>
+</html>

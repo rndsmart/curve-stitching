@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .canvas-container {
+        width: 500px;
+        height: 500px;
+        background-color: blue;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Lesson 9: Further Functional Abstraction</h1>
+
+    <p>
+      In the eighth lesson, we put our function to draw a single curve stitch
+      into another for loop in order to draw an 8-pointed star. Now we are going
+      to take the for loop and put it into another function in order to be able
+      to easily draw an 8-pointed-star pattern.
+    </p>
+
+    <p>
+      Now we can easily draw multiple star patterns as shown. Moreover, we've
+      probably already forgotten the details of how we drew a single curve
+      stitch in the first place! We've abstracted that problem out into a
+      function, and we don't need to remember those details; we can now start
+      thinking in terms of a complete curve stitch and star pattern as our basic
+      building blocks!
+    </p>
+
+    <p>
+      Hopefully you've started to get a feel of the power of LOOPS and FUNCTIONS
+      in order to be able to combine simple bits of code into more and more
+      sophisticated products. Variables, loops and functions and the building
+      blocks of programming. Once you know how to use them, you can build pretty
+      much anything by starting simple and combining these pieces into something
+      more and more elaborate.
+    </p>
+
+    <!-- Here we create our canvas -->
+
+    <div class="canvas-container">
+      <canvas id="mycanvas" width="500px" height="500px"></canvas>
+    </div>
+
+    <script>
+      // Set up
+      var canvas = document.getElementById("mycanvas");
+      var ctx = canvas.getContext("2d");
+      // Declare some GLOBAL variables
+      var canvasWidth = 500;
+      var canvasHeight = canvasWidth; // Make width and height equal so it's square
+
+      // Lets draw multiple star patterns
+      drawStar(100, 20, { x: 150, y: 100 });
+      drawStar(100, 20, { x: 350, y: 100 });
+
+      /**
+       * Now we put our loop to create a star pattern into its own function, and rework the variables
+       * so that they are arguments to the function
+       */
+      function drawStar(
+        curveStitchLength = 100,
+        numberOfLines = 10,
+        position = { x: 0, y: 0 }
+      ) {
+        // Lets put our calls to draw a curve stitch into another for loop
+        // and vary the angle of rotation
+        for (var j = 0; j < 8; j++) {
+          angleOfRotation = 45 * j;
+          x = position.x;
+          y = position.y;
+          drawCurveStitch(curveStitchLength, numberOfLines, angleOfRotation, {
+            x,
+            y,
+          });
+        }
+      }
+
+      /**
+       * Let's take the code we developed previously, put it into a function,
+       * and rework the most important parameters to our stitch as arguments to that
+       * function; this lets us easily reuse our code
+       *
+       * Notice that each of these arguments has an equals sign followed by a number;
+       * this is how you define a "default" value for the argument;
+       * if you do not suppl a value for the argument, then this value will be
+       * used instead.
+       */
+      function drawCurveStitch(
+        curveStitchLength = 100,
+        numberOfLines = 10,
+        rotationInDegrees = 0,
+        position = { x: 0, y: 0 }
+      ) {
+        // Define coords for the corner of our curve stitch
+        x = position.x;
+        y = position.y;
+        var spaceBetweenLinesOnAxes = curveStitchLength / numberOfLines;
+
+        // First move the corner of the canvas on which we are drawing
+        // to the place where we want to perform the rotation (the corner of our stitch)
+        ctx.save(); // saves the coordinate system
+        ctx.translate(x, y);
+
+        // Now rotate the whole canvas by 45 degrees
+        var oneDegree = Math.PI / 180;
+        ctx.rotate(rotationInDegrees * oneDegree);
+
+        // Now move the corner of the canvas back to its original position
+        ctx.translate(-x, -y);
+
+        // Code to loop through and draw 'numberOfLines' lines
+        ctx.beginPath();
+        ctx.strokeStyle = "white";
+        for (var i = 0; i < numberOfLines; i++) {
+          ctx.moveTo(x + (i + 1) * spaceBetweenLinesOnAxes, y + 0);
+          ctx.lineTo(
+            x + 0,
+            y + curveStitchLength - i * spaceBetweenLinesOnAxes
+          );
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+    </script>
+  </body>
+</html>
