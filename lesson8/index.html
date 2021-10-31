@@ -22,14 +22,16 @@
 
     <p>
       In the seventh lesson, we reworked our code into a reusable function. This
-      made it super easy to draw multiple curve stitches with precisely defined
-      variations.
+      made it super easy to draw multiple curve stitches, and all we had to do
+      was change the input values in order to create a simple four-pointed-star
+      pattern.
     </p>
     <p>
       In this lesson we are going to take that function and put it into another
-      for loop. The for loop will repeat the same block of code and
-      automatically vary the angle or rotation to 45 degree steps. This allows
-      us to easily generate an 8-pointed star pattern.
+      for loop. This for loop will repeat the same block of code to
+      automatically vary the angle of rotation to increase by 45 degrees each
+      loop. By running this loop 8 times, we can thereby easily generate an
+      8-pointed star pattern.
     </p>
 
     <p>
@@ -69,7 +71,7 @@
        * used instead.
        */
       function drawCurveStitch(
-        cureStitchLength = 100,
+        curveStitchLength = 100,
         numberOfLines = 10,
         rotationInDegrees = 0,
         position = { x: 0, y: 0 }

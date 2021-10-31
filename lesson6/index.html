@@ -22,14 +22,14 @@
 
     <p>
       In the fifth lesson, we generalized our code in order to draw the curve
-      stitch in any position, and to be able to easily set the size of the curve
-      stitch.
+      stitch in any position, and to be able to easily set the length of the
+      curve stitch's sides.
     </p>
 
     <p>
       Now we are going to generalize the rotational angle at which the curve
       stitch is drawn. This is a slightly trickier thing to code for two
-      reasons.
+      reasons:
     </p>
 
     <ol>
@@ -41,9 +41,9 @@
       </li>
       <li>
         When we rotate something in a drawing, we need to ask what and where we
-        are rotating it. Are rotating "everything" in the drawing, or just one
-        shape within it? And about what point in the canvas plane are we doing
-        the rotation?
+        are rotating it. Are we rotating "everything" in the drawing, or just
+        one shape within it? And about what point in the canvas plane are we
+        doing the rotation?
       </li>
     </ol>
     <p>
@@ -54,13 +54,14 @@
       set by default to be at the top-left corner of the canvas HTML element) in
       such a way that the corner of our stitch will be at the corner of the
       canvas. Then we rotate the whole canvas by some amount, then we draw the
-      curve stitch.
+      curve stitch, then we go back to our original coordinate state.
     </p>
     <p>
       If that sounds confusing -- DO NOT WORRY! It took me a fair bit of trial
       and error to get the rotations done right, and that is NORMAL in coding.
-      The great thing is, once you've figured something out in coding, you can
-      save that research in your code and then start building upon it.
+      The great thing is, once we've figured something out in coding, you can
+      save that research in your code, start building upon it, and essentially
+      forget all those pesky details!
     </p>
     <p>
       This is how coding works: always start with something simple and then
